@@ -1,46 +1,89 @@
-# NLP Based Recipe Recommendation System :yum: 
+# 🍳 Kenshoku AI (食)
+### NLP-Powered Intelligent Recipe Recommender & Pantry Assistant
 
-It is time to cook lunch and you open your refrigerator just to find that you have celery, broccoli, eggs, and oranges. What to cook out of it? I would say it takes me a few Google searches and reading a few blogs to find a recipe that involves these ingredients to cook.
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB.svg)](https://reactjs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-I usually get frustrated by the last-minute hassle of finding out a relevant recipe to try. I believe the hostel dwellers, working and busy moms, and casual cooks need something quick and easy to cater to them with the most relevant recipe.
+**Kenshoku AI** is a modern, full-stack application designed to solve the "What should I cook today?" dilemma. By combining Natural Language Processing (NLP) with Computer Vision, it transforms your available ingredients into delicious recipe suggestions.
 
-Motivated by this need, I decided to build a **recommender system to suggest recipes based on user input.**
+---
 
-![image1](Featured-leaving-fridge-open.jpg)
+## ✨ Key Features
 
+- 🧠 **NLP Recommender Engine**: Utilizes **Word2Vec** embeddings and **Cosine Similarity** to match your ingredients against a database of over **125,000 recipes**.
+- 📸 **AI Pantry Scanner**: Snap a photo of your fridge or pantry, and the system automatically identifies ingredients using **Llama-3 Vision** (via Groq).
+- 🛒 **Barcode Integration**: Instantly identify packaged goods by scanning barcodes, fetching data directly from the **OpenFoodFacts API**.
+- 📺 **Visual Learning**: Automatically fetches high-quality **YouTube recipe tutorials** for every recommendation.
+- 🎨 **Modern UI/UX**: A sleek, responsive dashboard built with **React** and **GSAP** for fluid animations.
 
-**Recommender Systems** are employed everywhere in most of the apps that we use. It automatically suggests the relevant options, topics, music, food, and movies to help us make better choices. When it comes to implementing NLP in recommender, it utilizes the similarity of the content. In this project we are using NLP content-based filtering to suggest users with top recipes relevant to what data they enter - be it recipe name, or ingredient list.  
+---
 
-In our project we only have text data of recipes, we don't have metadata like cuisine type, difficulty level, cook-time, seasonal data, or user-generated content (e.g., comments, votes, and reviews).
+## 🏗️ Technical Architecture
 
+### Backend (Python/FastAPI)
+- **Data Processing**: Scikit-learn and Pandas handle the cleanup of a massive 125k recipe dataset.
+- **NLP Model**: Gensim-based **Word2Vec** creates high-dimensional vector representations of recipe content (Title + Ingredients + Instructions).
+- **Vision Services**: Groq-powered Vision API for ingredient detection and PyZbar for local barcode processing.
+- **Search Logic**: Multi-stage filtering and similarity ranking to ensure highly relevant results.
 
-## Project Plan
+### Frontend (React/Vite)
+- **State Management**: Modern React hooks and Context API.
+- **Animations**: **GSAP** (GreenSock) for high-performance transitions and UI polish.
+- **Styling**: **Sass (SCSS)** with a modular architecture for a clean, consistent design.
 
-In this project, I am trying to recommend the top five recipes based on user input text data.
-Approach to solve this problem :
-1. I am utilizing data scrapped by Ryan Lee and presently available publically on the website [RecipeBox](https://eightportions.com/datasets/Recipes/) which contains 125,000 scraped recipes from three websites (Foodnetwork.com, Epicurious.com, and Allrecipes.com).
-2. First, my approach is to preprocess the data in context to -
-  - Handling null values and duplicates.
-  - Deleting unnecessary rows where the information may be incorrect.
-  - Adding all text together and standardizing it for natural language processing.
-        - Remove stop words, punctuations, and numbers.
-        - Change to lowercase and do lemmatization on the text data.
-3. Doing some exploratory data analysis like most common ingredients etc.
-4. After cleaning the text and preprocessing it, I am employing the below approaches to recommend recipes based on user input.
-  - First, Using TF-IDF vectorization to vectorize recipes and user input. Employing cosine similarity to recommend the top five recipes.
-  - Second, Using word2Vec embeddings and finding cosine similarity on user input and recipes.
-  - Third, using Gensim-based LDA on the BOW model and cosine similarity.
-5. Visually inspecting the result since, I don't have labeled data and determining which model is giving me the best result. I will try to fine tune the model that gives me the highest average cosine score.
+---
 
-Below is the high-level diagram of the steps involved in the project.
+## 🚀 Getting Started
 
-![image2](Project-flow-diagram.png)
+### Prerequisites
+- Python 3.8+
+- Node.js 18+
+- [Groq API Key](https://console.groq.com/) (for Vision features)
+- [YouTube Data API v3 Key](https://developers.google.com/youtube/v3) (for recipe videos)
 
-Through this project I was trying to learn NLP better and utilized it practically by implementing the concepts in recommending recipes. I am sure more can be done to improve this and if there are any queries, improvements and comments please feel free to let me know.
+### 1. Backend Setup
+```bash
+# Navigate to root
+pip install -r requirements.txt
 
+# Create .env file
+# GROQ_API_KEY=your_key
+# YOUTUBE_API_KEY=your_key
 
-**References**
-- [https://eightportions.com/datasets/Recipes/](https://eightportions.com/datasets/Recipes/)
-- [https://towardsdatascience.com/building-a-recipe-recommendation-api-using-scikit-learn-nltk-docker-flask-and-heroku-bfc6c4bdd2d4](https://towardsdatascience.com/building-a-recipe-recommendation-api-using-scikit-learn-nltk-docker-flask-and-heroku-bfc6c4bdd2d4)
-- [https://github.com/JohnVillanueva/Recipe-Recommendation-System](https://github.com/JohnVillanueva/Recipe-Recommendation-System)
-- [https://medium.com/@hajar.zankadi/using-latent-dirichlet-allocation-lda-and-nlp-techniques-to-predict-interest-tags-from-tweets-d0e275b1032d](https://medium.com/@hajar.zankadi/using-latent-dirichlet-allocation-lda-and-nlp-techniques-to-predict-interest-tags-from-tweets-d0e275b1032d)
+# Start the server
+python main.py
+```
+
+### 2. Frontend Setup
+```bash
+cd client
+npm install
+npm run dev
+```
+
+---
+
+## 📊 Dataset Information
+The project utilizes a comprehensive dataset of 125,000 recipes scraped from:
+- AllRecipes
+- Epicurious
+- Food Network
+
+*Note: Due to size constraints, the raw JSON datasets and the pre-trained `recipe_model.pkl` (400MB+) are ignored in this repository. The system will automatically attempt to train the model on first launch if data is available.*
+
+---
+
+## 🛠️ Future Roadmap
+- [ ] User profiles and saved "favorite" recipes.
+- [ ] Dietary preference filters (Vegan, Keto, Gluten-free).
+- [ ] Shopping list generation from selected recipes.
+- [ ] Mobile app version using React Native.
+
+---
+
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Developed with ❤️ by [Your Name/GitHub Handle]
